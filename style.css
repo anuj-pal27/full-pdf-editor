@@ -287,6 +287,16 @@ body{
     padding: 2rem;
 }
 
+.tool-btn1{
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background: #f86635;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
 .upload-section i {
     font-size: 48px;
     color: #ffffff;
