@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop PDF - PDF Editor</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 
+            "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <a href="tools.html">
+                    <img src="https://www.writecream.com/wp-content/uploads/2021/05/va-logo.svg" alt="PDF Editor">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="tools.html">All Tools</a></li>
+                <li><a href="compress.html">Compress PDF</a></li>
+                <li><a href="edit.html">Edit PDF</a></li>
+                <li><a href="merge.html">Merge PDF</a></li>
+                <li><a href="delete.html">Delete Pages</a></li>
+                <li><a href="crop.html" class="active">Crop</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="login.html" class="login-btn">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+        <div class="background-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Crop PDF Pages</h1>
+                <p class="hero-description">Select an area to crop your PDF pages. Adjust the crop area using the handles.</p>
+            </div>
+        </div>
+
+        <div class="upload-section" id="upload-section">
+            <div class="upload-icon">
+                <i class="fas fa-file-pdf"></i>
+            </div>
+            <div class="upload-controls">
+                <input type="file" id="pdf-upload" accept="application/pdf" style="display: none;">
+                <button id="upload-btn" class="primary-btn">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    Choose PDF Files
+                </button>
+                <p class="upload-description">Drop your PDF file here</p>
+            </div>
+        </div>
+
+        <div id="pdf-container" style="display: none;">
+            <div class="tool-group">
+                <div class="tool-item">
+                    <button class="tool-btn" id="crop-btn" title="Crop">
+                        <i class="fas fa-crop-alt"></i>
+                        <span>Crop</span>
+                    </button>
+                </div>
+                <div class="tool-item">
+                    <button class="tool-btn" id="reset-btn" title="Reset">
+                        <i class="fas fa-undo"></i>
+                        <span>Reset</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="canvas-container" style="touch-action: pan-y pinch-zoom; overflow: auto;">
+                <canvas id="pdf-canvas"></canvas>
+            </div>
+
+            <div class="zoom-controls">
+                <button class="zoom-btn" id="zoom-in-btn" title="Zoom In">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+                <span id="zoom-level">100%</span>
+                <button class="zoom-btn" id="zoom-out-btn" title="Zoom Out">
+                    <i class="fas fa-search-minus"></i>
+                </button>
+            </div>
+
+            <div class="page-navigation">
+                <button id="prev-page" class="nav-btn">
+                    <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                <div class="page-info">
+                    Page <span id="page-num">1</span> of <span id="page-count">1</span>
+                </div>
+                <button id="next-page" class="nav-btn">
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="action-btn primary" id="apply-crop-btn">
+                    <i class="fas fa-check"></i>
+                    Apply Crop
+                </button>
+                <button class="action-btn" id="download-btn">
+                    <i class="fas fa-download"></i>
+                    Download
+                </button>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Company Info -->
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="" alt="WriteCream AI Logo">
+                </div>
+                <p class="company-description">
+                    WriteCream AI provides intelligent document solutions to make your work easier and more efficient.
+                </p>
+                <div class="social-links">
+                    <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+    
+            <!-- Quick Links -->
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+    
+            <!-- Tools -->
+            <div class="footer-section">
+                <h4>Our Tools</h4>
+                <ul>
+                    <li><a href="#">JPG to PDF</a></li>
+                    <li><a href="#">PDF Editor</a></li>
+                    <li><a href="#">PDF Merger</a></li>
+                    <li><a href="#">PDF Compressor</a></li>
+                    <li><a href="#">All Tools</a></li>
+                </ul>
+            </div>
+    
+            <!-- Contact Info -->
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <ul class="contact-info">
+                    <li><i class="fas fa-envelope"></i> support@writecream.com</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Business Street, Suite 100<br>New York, NY 10001</li>
+                </ul>
+            </div>
+        </div>
+    
+        <!-- Bottom Bar -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2024 WriteCream AI. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="crop.js"></script>
+</body>
+</html> 
