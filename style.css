@@ -444,6 +444,7 @@ body{
     cursor: pointer;
     color: #666;
     transition: color 0.3s;
+    color: #f86635;
 }
 
 .tool-btn:hover {
