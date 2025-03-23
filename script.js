@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById('close-link-modal').addEventListener('click', hideLinkModal);
 
   // Delete button handler
-  document.getElementById('delete-btn')?.addEventListener('click', deleteSelectedObject);
+  document.getElementById('delete-tool-btn')?.addEventListener('click', deleteSelectedObject);
 
   // Signature button handler
   const signBtn = document.querySelector('button[title="Sign"]');
