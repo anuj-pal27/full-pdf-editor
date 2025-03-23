@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "routes":[
+    {
+    "src":"/",
+    "dest":"/tools.html",
+    "continue":false
+    },
+    {
+    "src":"/tools",
+    "dest":"/tools.html",
+    "continue":false},
+    {"src":"/tools.html",
+    "dest":"/tools.html",
+    "continue":false}
+    ]
+}
